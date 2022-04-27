@@ -1,6 +1,7 @@
 package Silver;
 
-// https://github.com/Chrisyhjiang/USACO
+// USACO 2022 February Contest, Silver - Problem 3. Email Filing
+// http://www.usaco.org/index.php?page=viewproblem2&cpid=1208
 
 import java.io.*;
 import java.util.*;
@@ -13,7 +14,7 @@ public class EmailFilling {
 	static ArrayList<Integer> folders;
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		
+		// path for test data on my local machine
 		String path = "/Users/wenbojiang/Downloads/prob3_silver_feb22/";
 		for (int a = 1; a <= 12; a++) {
 			String fn = path + a + "t.in";
@@ -50,18 +51,26 @@ public class EmailFilling {
 		}
 	}
 	
+	/**
+	 * This method implements a two phase algorithms. 
+	 * 
+	 * In phase one we process the original mail list into an unprocessed list and the current mail list with at most k entry. This step terminates when
+	 * the last element in the original mail list is process.
+	 * 
+	 * In phase 2, we continue process the current mail list and the unprocessed mail list. The step terminates
+	 * when it reached the last folder entry m
+	 */
 	public static boolean canFill() {
 		ArrayList<Integer> curMails= new ArrayList<Integer>();
 		ArrayList<Integer> unProcessedMails = new ArrayList<Integer>();
 		 
 		int startFolder = 1; // start folder
 		int endFolder = k; // end folder
-		int pos = find(startFolder);
+		int pos = find(startFolder); // the last index of the given entry in the original mail list;
 		
-		// phase one: process emails on the original folder list
+		// phase one: process email on the original folder list and store all the currMails & unProcessedMails
 		for(int i = 0 ; i < folders.size(); i++) {
-			
-			
+			// check whether curMials can be moved to folders
 			for(int j = curMails.size()-1; j >= 0; j--) {
 				int q = curMails.get(j);
 				if(q >= startFolder && q <= endFolder) {
@@ -69,6 +78,11 @@ public class EmailFilling {
 				}
 			}
 			
+			// process the mail from original folder, there are 2 states for mailed that cannot be moved to folder. 
+			// #1: moved to curMail list 
+			// #2: moved the top mail from the curMail list to unProcessedMails and moved the mail into curMail.
+			// In case the curMail list is full, we check the current index with the last entry of the startFolder
+			// to decide whether move up the folder or move up the mail to unprocessed list.
 			int current = folders.get(i);
 			if(current < startFolder || current > endFolder) {
 				if(curMails.size() < k) {
@@ -94,6 +108,7 @@ public class EmailFilling {
 		
 		// phase 2: process email on the current list and unprocessed list
 		while(startFolder <= m) {
+			// processed the current mail list
 			for(int i = curMails.size()-1; i >= 0; i--) {
 				int q = curMails.get(i);
 				if(q >= startFolder && q <= endFolder) {
@@ -101,6 +116,7 @@ public class EmailFilling {
 				}
 			}
 			
+			// add unprocessed mail into curMail.
 			while(curMails.size() < k) {
 				if(!unProcessedMails.isEmpty()) {
 					int j = unProcessedMails.remove(0);
@@ -114,10 +130,10 @@ public class EmailFilling {
 			startFolder++;
 			endFolder = Math.min(m, ++endFolder);
 		}
-		
 		return unProcessedMails.size() == 0 && curMails.size() == 0;
 	}
 	
+	// find the last index of the given entry
 	public static int find(int target) {
 		int result = -1;
 		for(int i = folders.size()-1; i >= 0; i--) {
