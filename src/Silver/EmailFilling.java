@@ -17,16 +17,15 @@ public class EmailFilling {
 		// path for test data on my local machine
 		String path = "/Users/wenbojiang/Downloads/prob3_silver_feb22/";
 		for (int a = 1; a <= 12; a++) {
-			String fn = path + a + "t.in";
+			String fn = path + a + ".in";
 			File file = new File(fn);
 			BufferedReader br = new BufferedReader(new FileReader(file));
-			
 			String ofn = path + a + ".out";
 			File out = new File(ofn);
 			BufferedReader bw = new BufferedReader(new FileReader(out));
-			
 			int s = Integer.parseInt(br.readLine());
 			boolean succeed = true;
+			
 			for(int i = 0; i < s; i++) {
 				String[] line = br.readLine().split(" ");
 				m = Integer.parseInt(line[0]);
@@ -63,10 +62,10 @@ public class EmailFilling {
 	public static boolean canFill() {
 		ArrayList<Integer> curMails= new ArrayList<Integer>();
 		ArrayList<Integer> unProcessedMails = new ArrayList<Integer>();
-		 
 		int startFolder = 1; // start folder
-		int endFolder = k; // end folder
-		int pos = find(startFolder); // the last index of the given entry in the original mail list;
+		int endFolder = k;  // end folder
+		// find last index of the given entry in the original mail list;
+		int pos = find(startFolder); 
 		
 		// phase one: process email on the original folder list and store all the currMails & unProcessedMails
 		for(int i = 0 ; i < folders.size(); i++) {
@@ -102,7 +101,6 @@ public class EmailFilling {
 					}
 				}
 			}
-			
 		}
 		
 		
@@ -130,7 +128,8 @@ public class EmailFilling {
 			startFolder++;
 			endFolder = Math.min(m, ++endFolder);
 		}
-		return unProcessedMails.size() == 0 && curMails.size() == 0;
+		// return true when no elements in unProcessed mail list and current mail list
+		return unProcessedMails.isEmpty() && curMails.isEmpty();
 	}
 	
 	// find the last index of the given entry
@@ -144,5 +143,4 @@ public class EmailFilling {
 		}
 		return result;
 	}
-	
 }
