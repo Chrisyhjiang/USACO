@@ -13,8 +13,9 @@ public class EmailFilling {
 	static ArrayList<Integer> folders;
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
+		
 		String path = "/Users/wenbojiang/Downloads/prob3_silver_feb22/";
-		for (int a = 5; a <= 5; a++) {
+		for (int a = 1; a <= 12; a++) {
 			String fn = path + a + ".in";
 			File file = new File(fn);
 			BufferedReader br = new BufferedReader(new FileReader(file));
@@ -23,7 +24,6 @@ public class EmailFilling {
 			File out = new File(ofn);
 			BufferedReader bw = new BufferedReader(new FileReader(out));
 			
-			//BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			int s = Integer.parseInt(br.readLine());
 			boolean succeed = true;
 			for(int i = 0; i < s; i++) {
@@ -42,162 +42,88 @@ public class EmailFilling {
 					System.out.println("failed on sub test cases: " + (i+1));
 					succeed = false;
 				}
-				//System.out.println(result);
 			}
 			String p = succeed ? "succeed...  " : "failed....";
 			System.out.println(String.format("test case %d %s", a, p));
-			
-			 
-			//bw.write(Integer.toString(result));
 			br.close();
 			bw.close();
-//			File out = new File(fn + ".out");
-//			BufferedReader or = new BufferedReader(new FileReader(out));
-//			
-//			int ans = Integer.parseInt(or.readLine());
-//			String passed = "passed";
-//			if (ans != result) {
-//				passed = "failed";
-//			}
-//			String msg = String.format("test case %d %s !!! mine: %d expected: %d", i, passed, result, ans);
-//			
-//			System.out.println(msg);
-//			or.close();
-			
-			
 		}
 	}
 	
 	public static boolean canFill() {
-		boolean ans = true;
-		ArrayList<Integer> rest = new ArrayList<Integer>();
-		ArrayList<Integer> store = new ArrayList<Integer>();
- 		int target = 1;
- 		int end = k;
-		int pos = 0;
-		int count = 0;
-		while(target <= m) {
-			if(pos < n) {
-				 int s = find(target, pos);
-				 for(int i = pos; i <= s; i++) {
-					 int temp = folders.get(i);
-					 if(temp < target || temp > end) {
-						 rest.add(0, temp);
-					 }else {
-						 count++;
-					 }
-				 }
-				 target = Math.min(m, ++target);
-				 end = Math.min(m, ++end);
-				 if(s != -1) {
-					 pos = s + 1;
-				 }
-			}else {
-				break;
+		ArrayList<Integer> curMails= new ArrayList<Integer>();
+		ArrayList<Integer> unProcessedMails = new ArrayList<Integer>();
+		 
+		int startFolder = 1; // start folder
+		int endFolder = k; // end folder
+		int pos = find(startFolder);
+		
+		// phase one: process emails on the original folder list
+		for(int i = 0 ; i < folders.size(); i++) {
+			
+			
+			for(int j = curMails.size()-1; j >= 0; j--) {
+				int q = curMails.get(j);
+				if(q >= startFolder && q <= endFolder) {
+					curMails.remove(j);
+				}
 			}
+			
+			int current = folders.get(i);
+			if(current < startFolder || current > endFolder) {
+				if(curMails.size() < k) {
+					curMails.add(current);
+				}else {
+					if(i <= pos) {
+						// move up the top mail into unprocessed email list
+						unProcessedMails.add(0, curMails.get(0));
+						curMails.remove(0);
+						curMails.add(current);
+					}else {
+						// move up the folder list;
+						startFolder++;
+						endFolder = Math.min(m, ++endFolder);
+						i--;
+						pos = find(startFolder);
+					}
+				}
+			}
+			
 		}
 		
 		
-		
-			while(count < n) {
-				if(store.size() < k) {
-					if(rest.size() > 0) {
-						int t = rest.remove(0);
-						if(t < target || t > end) {
-							store.add(t);
-						}else {
-							count++;
-						}
-					}else {
-						target++;
-						end = Math.min(m, ++end);
-						if(target <= m) {
-							for(int i = store.size()-1; i >= 0; i--) {
-								if(store.get(i) >= target && store.get(i) <= end) {
-									count++;
-									store.remove(i);
-								} 
-							}
-						}else {
-							break;
-						}
+		// phase 2: process email on the current list and unprocessed list
+		while(startFolder <= m) {
+			for(int i = curMails.size()-1; i >= 0; i--) {
+				int q = curMails.get(i);
+				if(q >= startFolder && q <= endFolder) {
+					curMails.remove(i);
+				}
+			}
+			
+			while(curMails.size() < k) {
+				if(!unProcessedMails.isEmpty()) {
+					int j = unProcessedMails.remove(0);
+					if(j < startFolder || j > endFolder) {
+						curMails.add(0, j);
 					}
 				}else {
-					target++;
-					end = Math.min(m, ++end);
-					if(target <= m) {
-						for(int i = store.size()-1; i >= 0; i--) {
-							if(store.get(i) >= target && store.get(i) <= end) {
-								count++;
-								store.remove(i);
-							} 
-						}
-					}else {
-						break;
-					}
-				
+					break;
 				}
+			}
+			startFolder++;
+			endFolder = Math.min(m, ++endFolder);
 		}
 		
-//		if(count != n) {
-//			while(target <= m) {
-//				if(store.size() < k) {
-//					if(rest.size() > 0) {
-//						int t = rest.remove(0);
-//						if(t < target || t > end) {
-//								store.add(t);
-//							}else {
-//								while(target < m) {
-//									target++;
-//									end = Math.min(m, ++end);
-//									for(int j = 0; j < store.size(); j++) {
-//										if(store.get(j) >= target && store.get(j) <= end) {
-//											store.remove(j);
-//											count++;
-//											j--;
-//										}
-//									}
-//									if(store.size() < k) {
-//										store.add(t);
-//										break;
-//									}
-//								}				
-//							}
-//						}else {
-//							count++;
-//						}
-//					}else {
-//						for(int i = store.size()-1; i >= 0; i--) {
-//							if(store.get(i) >= target && store.get(i) <= end) {
-//								count++;
-//								store.remove(i);
-//							} 
-//						}
-//						target++;
-//						end = Math.min(m, ++end);
-//					}
-//					
-//				}else {
-//					for(int i = store.size()-1; i >= 0; i--) {
-//						if(store.get(i) >= target && store.get(i) <= end) {
-//							count++;
-//							store.remove(i);
-//						} 
-//					}
-//					target++;
-//					end = Math.min(m, ++end);
-//				}
-//				
-//			
-//		}
-		return count == n;
+		return unProcessedMails.size() == 0 && curMails.size() == 0;
 	}
 	
-	public static int find(int target, int start) {
+	public static int find(int target) {
 		int result = -1;
-		for(int i = start; i < folders.size(); i++) {
+		for(int i = folders.size()-1; i >= 0; i--) {
 			if(folders.get(i) == target) {
 				result = i;
+				break;
 			}
 		}
 		return result;
