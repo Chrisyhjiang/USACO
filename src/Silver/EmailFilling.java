@@ -132,7 +132,7 @@ public class EmailFilling {
 		return unProcessedMails.isEmpty() && curMails.isEmpty();
 	}
 	
-	// find the last index of the given entry
+	// find the last index of the given entry or -1 if the item cannot be found
 	public static int find(int target) {
 		int result = -1;
 		for(int i = folders.size()-1; i >= 0; i--) {
