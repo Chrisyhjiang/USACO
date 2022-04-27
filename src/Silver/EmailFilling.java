@@ -16,7 +16,7 @@ public class EmailFilling {
 		
 		String path = "/Users/wenbojiang/Downloads/prob3_silver_feb22/";
 		for (int a = 1; a <= 12; a++) {
-			String fn = path + a + ".in";
+			String fn = path + a + "t.in";
 			File file = new File(fn);
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			
