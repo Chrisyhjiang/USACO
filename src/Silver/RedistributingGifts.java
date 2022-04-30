@@ -1,4 +1,5 @@
 package Silver;
+// USACO 2022 February Contest, Silver - Problem 1. Redistributing Gifts
 // http://www.usaco.org/index.php?page=viewproblem2&cpid=1206
 import java.io.*;
 import java.util.*;
