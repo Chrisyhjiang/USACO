@@ -1,3 +1,7 @@
+
+// USACO 2022 February Contest, Silver- Problem 2. Robot Instructions
+// http://www.usaco.org/index.php?page=viewproblem2&cpid=1207
+
 package Silver;
 
 import java.io.*;
