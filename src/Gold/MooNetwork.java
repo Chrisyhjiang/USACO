@@ -19,7 +19,7 @@ public class MooNetwork {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		// path for test data on my local machine
-		String path = "/Users/wenbojiang/Downloads/prob3_gold_feb22/";
+		String path = "/Users/chris/Downloads/prob3_gold_feb22/";
 		for (int t = 1; t <= 15; t++) {
 			String fn = path + t + ".in";
 			File file = new File(fn);
@@ -47,7 +47,7 @@ public class MooNetwork {
 					if(elements[j] != null) {
 						/* for a given position p(x,y) we only need consider the left side of p and the max number of edges is 11
 						 * for the same y-axis coordinate, take the the greatest key strictly less than the given key
-						 * for the different y-axis coordinate, take the largest key which is less than or equal to the key
+						 * for the different y-axis coordinates, take the largest key which is less than or equal to the key
 						 */
 						Map.Entry<Integer, Integer> p = (ys[i] == j) ?  elements[j].lowerEntry(xs[i]) : elements[j].floorEntry(xs[i]);
 						if(p != null) {
