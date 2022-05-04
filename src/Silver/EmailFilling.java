@@ -15,7 +15,7 @@ public class EmailFilling {
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		// path for test data on my local machine
-		String path = "/Users/wenbojiang/Downloads/prob3_silver_feb22/";
+		String path = "/Users/chris/Downloads/prob3_silver_feb22/";
 		for (int a = 1; a <= 12; a++) {
 			String fn = path + a + ".in";
 			File file = new File(fn);
