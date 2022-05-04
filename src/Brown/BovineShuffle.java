@@ -6,10 +6,8 @@ public class BovineShuffle {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-//		String path = "/Users/christopherjiang/Desktop/shuffle_bronze_dec17/";
 		File file = new File("shuffle.in");
 		BufferedReader br = new BufferedReader(new FileReader(file));
-//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		String[] line = br.readLine().split(" ");
 		int[] o = new int[n+1];

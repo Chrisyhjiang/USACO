@@ -3,6 +3,7 @@ package Brown;
 // http://usaco.org/index.php?page=viewproblem2&cpid=1157
 import java.io.*;
 public class Walkinghome {
+	
 	static boolean[][] field = null;
 	static int totalTurns = 0;
 	static int size = 0;

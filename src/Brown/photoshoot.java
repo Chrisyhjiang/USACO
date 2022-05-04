@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class photoshoot {
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
-//		String path = "/Users/christopherjiang/Desktop/photo_bronze_jan20/";
 		File file = new File("photo.in");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		int n = Integer.parseInt(br.readLine());

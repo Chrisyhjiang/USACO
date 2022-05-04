@@ -13,7 +13,6 @@ public class ClockwiseFence {
 		values.put("ES", 1);
 		values.put("SW", 1);
 		values.put("WN", 1);
-		
 		values.put("EN", -1);
 		values.put("SE", -1);
 		values.put("WS", -1);

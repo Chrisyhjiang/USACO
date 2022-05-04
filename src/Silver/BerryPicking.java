@@ -8,9 +8,6 @@ public class BerryPicking {
 	static int k;
 	static int[] cr;
 	public static void main(String[] args) throws IOException {
-//		String path = "/Users/christopherjiang/Desktop/berries_silver_jan20/";
-//		for (int i = 1; i <= 11; i++) {
-//			String fn = path + i;
 			File file = new File("berries.in");
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String[] line = br.readLine().split(" ");
@@ -36,20 +33,6 @@ public class BerryPicking {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(out)); 
 			bw.write(Integer.toString(result));
 			bw.close();
-//			File out = new File(fn + ".out");
-//			BufferedReader or = new BufferedReader(new FileReader(out));
-//			
-//			int ans = Integer.parseInt(or.readLine());
-//			String passed = "passed";
-//			if (ans != result) {
-//				passed = "failed";
-//			}
-//			String msg = String.format("test case %d %s !!! mine: %d expected: %d", i, passed, result, ans);
-//			
-//			System.out.println(msg);
-//			or.close();
-		
-//		}
 	}
 	public static int getMaxCherry(int c) {
 		int result = 0;
