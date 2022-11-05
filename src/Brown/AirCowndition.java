@@ -5,7 +5,7 @@ import java.io.*;
 
 public class AirCowndition {
 	static int[] diff = null;
-	//public static void main2(String[] args) throws NumberFormatException, IOException {
+	public static void main3(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));// TODO Auto-generated method stub
 		int n = Integer.parseInt(br.readLine());
 		String[] first = br.readLine().split(" ");
